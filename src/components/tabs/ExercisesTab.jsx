@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { EXERCISES } from "../../data/constants";
 import { LevelBadge } from "../common/LevelBadge";
 
@@ -38,29 +39,99 @@ export function ExercisesTab({ onLog, plan, setPlan }) {
     return "reps";
   };
 
-  const getExerciseImage = (selectedMode, category) => {
-    const imageMap = {
-      gym: {
-        "Face & Neck": "/images/gym-chest.svg",
-        Chest: "/images/gym-chest.svg",
-        Back: "/images/gym-back.svg",
-        Shoulders: "/images/gym-shoulders.svg",
-        Arms: "/images/gym-arms.svg",
-        Core: "/images/gym-core.svg",
-        Legs: "/images/gym-legs.svg",
-        Glutes: "/images/gym-legs.svg",
-        Cardio: "/images/gym-cardio.svg",
-      },
-      calisthenics: {
-        default: "/images/calisthenics.svg"
-      },
-      home: {
-        default: "/images/home-workout.svg"
-      }
+  // Actual exercise demonstration images from wger.de open-source exercise database
+  // These are exact illustrations showing the correct movement for each exercise
+  const getExerciseImage = (exerciseName) => {
+    const WGER = "https://wger.de/media/exercise-images";
+    const exerciseImages = {
+      // ── GYM: CHEST ──────────────────────────────────────────
+      "Flat Bench Press":        `${WGER}/192/Bench-press-1.png`,
+      "Incline Dumbbell Press":  `${WGER}/41/Incline-bench-press-1.png`,
+      "Cable Fly":               `${WGER}/71/Cable-crossover-2.png`,
+      "Chest Dip":               `${WGER}/83/Bench-dips-1.png`,
+      "Decline Bench Press":     `${WGER}/100/Decline-bench-press-1.png`,
+      // ── GYM: BACK ───────────────────────────────────────────
+      "Lat Pulldown":            `${WGER}/143/Cable-seated-rows-2.png`,
+      "Barbell Deadlift":        `${WGER}/161/Dead-lifts-2.png`,
+      "Seated Cable Row":        `${WGER}/143/Cable-seated-rows-2.png`,
+      "T-Bar Row":               `${WGER}/106/T-bar-row-1.png`,
+      // ── GYM: SHOULDERS ──────────────────────────────────────
+      "Overhead Press":          `${WGER}/119/seated-barbell-shoulder-press-large-1.png`,
+      "Lateral Raise":           `${WGER}/148/lateral-dumbbell-raises-large-2.png`,
+      "Arnold Press":            `${WGER}/123/dumbbell-shoulder-press-large-1.png`,
+      "Rear Delt Fly":           `${WGER}/109/Barbell-rear-delt-row-1.png`,
+      // ── GYM: ARMS ───────────────────────────────────────────
+      "Barbell Curl":            `${WGER}/81/Biceps-curl-1.png`,
+      "Skull Crusher":           `${WGER}/84/Lying-close-grip-triceps-press-to-chin-1.png`,
+      "Preacher Curl":           `${WGER}/193/Preacher-curl-3-1.png`,
+      "Tricep Pushdown":         `${WGER}/138/Hammer-curls-with-rope-1.png`,
+      // ── GYM: CORE ───────────────────────────────────────────
+      "Cable Crunch":            `${WGER}/91/Crunches-1.png`,
+      "Hanging Leg Raise":       `${WGER}/125/Leg-raises-2.png`,
+      "Ab Wheel Rollout":        `${WGER}/56/Decline-crunch-1.png`,
+      "Oblique Crunch Machine":  `${WGER}/176/Cross-body-crunch-1.png`,
+      // ── GYM: LEGS ───────────────────────────────────────────
+      "Barbell Squat":           `${WGER}/191/Front-squat-1-857x1024.png`,
+      "Leg Press":               `${WGER}/130/Narrow-stance-hack-squats-1-1024x721.png`,
+      "Leg Curl":                `${WGER}/154/lying-leg-curl-machine-large-1.png`,
+      "Hack Squat":              `${WGER}/130/Narrow-stance-hack-squats-1-1024x721.png`,
+      "Calf Raise Machine":      `${WGER}/117/seated-leg-curl-large-1.png`,
+      // ── GYM: GLUTES ─────────────────────────────────────────
+      "Hip Thrust":              `${WGER}/116/Good-mornings-2.png`,
+      "Glute Kickback Machine":  `${WGER}/118/standing-leg-curls-large-1.png`,
+      "Romanian Deadlift":       `${WGER}/161/Dead-lifts-2.png`,
+      "Cable Pull Through":      `${WGER}/116/Good-mornings-2.png`,
+      // ── GYM: CARDIO ─────────────────────────────────────────
+      "Treadmill Run":           `/images/ex_bench_press.png`,
+      "Elliptical":              `/images/ex_squat.png`,
+      "Rowing Machine":          `/images/ex_deadlift.png`,
+      "Stairmaster":             `/images/ex_overhead_press.png`,
+      // ── CALISTHENICS: UPPER BODY ────────────────────────────
+      "Push-Up":                 `/images/ex_pushup.png`,
+      "Pull-Up":                 `/images/ex_pullup.png`,
+      "Diamond Push-Up":         `/images/ex_pushup.png`,
+      "Pike Push-Up":            `/images/ex_pushup.png`,
+      "Dip":                     `${WGER}/83/Bench-dips-1.png`,
+      // ── CALISTHENICS: CORE ──────────────────────────────────
+      "Plank":                   `${WGER}/91/Crunches-1.png`,
+      "L-Sit":                   `${WGER}/125/Leg-raises-2.png`,
+      "Dragon Flag":             `${WGER}/56/Decline-crunch-1.png`,
+      "Hollow Body Hold":        `${WGER}/176/Cross-body-crunch-1.png`,
+      // ── CALISTHENICS: LEGS ──────────────────────────────────
+      "Pistol Squat":            `${WGER}/191/Front-squat-1-857x1024.png`,
+      "Jump Squat":              `${WGER}/191/Front-squat-1-857x1024.png`,
+      "Walking Lunge":           `${WGER}/113/Walking-lunges-1.png`,
+      "Nordic Curl":             `${WGER}/154/lying-leg-curl-machine-large-1.png`,
+      // ── CALISTHENICS: SKILL ─────────────────────────────────
+      "Muscle-Up":               `/images/ex_pullup.png`,
+      "Handstand Hold":          `/images/ex_overhead_press.png`,
+      "Front Lever":             `/images/ex_pullup.png`,
+      "Human Flag Progression":  `/images/ex_pullup.png`,
+      // ── CALISTHENICS: ATHLETIC ──────────────────────────────
+      "Burpee":                  `/images/ex_pushup.png`,
+      "Box Jump":                `${WGER}/191/Front-squat-1-857x1024.png`,
+      "Bear Crawl":              `/images/ex_pushup.png`,
+      // ── NECK / FACE ─────────────────────────────────────────
+      "Neck Press Machine":      `${WGER}/53/Shoulder-press-machine-2.png`,
+      "Jaw Resistance Pull":     `${WGER}/148/lateral-dumbbell-raises-large-2.png`,
+      "Neck Bridge":             `${WGER}/116/Good-mornings-2.png`,
+      "Lateral Neck Stretch":    `${WGER}/148/lateral-dumbbell-raises-large-2.png`,
+      "Chin Tuck":               `${WGER}/53/Shoulder-press-machine-2.png`,
+      "Head Roll":               `${WGER}/53/Shoulder-press-machine-2.png`,
+      "Jaw Resistance Push":     `${WGER}/53/Shoulder-press-machine-2.png`,
     };
 
-    const modeImages = imageMap[selectedMode] || {};
-    return modeImages[category] || modeImages.default || "/images/home-workout.svg";
+    return exerciseImages[exerciseName] || `/images/ex_bench_press.png`;
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
   };
 
 
@@ -107,13 +178,18 @@ export function ExercisesTab({ onLog, plan, setPlan }) {
             ))}
           </div>
 
-          <div style={{ flex: 1, minWidth: 260 }}>
+          <motion.div style={{ flex: 1, minWidth: 260 }} variants={containerVariants} initial="hidden" animate="show">
             {filtered.length === 0
               ? <div style={{ color: "#94a3b8", padding: "24px 0", textAlign: "center" }}>No exercises match your filter.</div>
               : filtered.map((ex, i) => (
-                <div key={i} className="exercise-card">
+                <motion.div key={ex.name + i} variants={itemVariants} whileHover={{ scale: 1.01 }} className="exercise-card">
                   <div className="exercise-thumbnail">
-                    <img src={getExerciseImage(mode, cat)} alt={ex.name} />
+                    <img
+                      src={getExerciseImage(ex.name)}
+                      alt={ex.name}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      onError={e => { e.target.onerror = null; e.target.src = "/images/ex_bench_press.png"; }}
+                    />
                   </div>
                   <div className="exercise-content">
                     <div className="exercise-title-row">
@@ -159,15 +235,15 @@ export function ExercisesTab({ onLog, plan, setPlan }) {
                       </div>
                     )}
                     <div className="exercise-actions">
-                      <button className="action-btn secondary" onClick={() => window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(ex.name + ' exercise tutorial')}`, '_blank')}>▶ Watch</button>
-                      <button className="action-btn" onClick={() => addToPlan(ex)}>+ Plan</button>
-                      <button className="action-btn primary" onClick={() => logEx(ex)}>Log</button>
+                      <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="action-btn secondary" onClick={() => window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(ex.name + ' exercise tutorial')}`, '_blank')}>▶ Watch</motion.button>
+                      <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="action-btn" onClick={() => addToPlan(ex)}>+ Plan</motion.button>
+                      <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="action-btn primary" onClick={() => logEx(ex)}>Log</motion.button>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))
             }
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import { YOGA_DATA } from "../../data/constants";
 import { LevelBadge } from "../common/LevelBadge";
 
@@ -12,8 +13,48 @@ export function YogaTab({ onLog }) {
 
   const styleData = YOGA_DATA[style];
 
-  const getYogaImage = (styleName) => {
-    return "/images/yoga.svg";
+  const getYogaImage = (styleName, poseName) => {
+    // Yoga pose images — using open CDN sources per pose name
+    const poseImages = {
+      // Hatha poses
+      "Mountain Pose":       "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tadasana_Yoga-Atha-Yugni.jpg/400px-Tadasana_Yoga-Atha-Yugni.jpg",
+      "Downward Dog":        "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Asana_Yoga-Atha-Yugni.jpg/400px-Asana_Yoga-Atha-Yugni.jpg",
+      "Warrior I":           "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Virabhadrasana_I.jpg/400px-Virabhadrasana_I.jpg",
+      "Warrior II":          "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Virabhadrasana_II.jpg/400px-Virabhadrasana_II.jpg",
+      "Tree Pose":           "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Vriksasana_yoga_pose.jpg/400px-Vriksasana_yoga_pose.jpg",
+      "Child's Pose":        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Balasana_yoga.jpg/400px-Balasana_yoga.jpg",
+      "Triangle Pose":       "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Utthita_Trikonasana_Yoga-Atha-Yugni.jpg/400px-Utthita_Trikonasana_Yoga-Atha-Yugni.jpg",
+      "Seated Forward Bend": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Paschimottanasana.jpg/400px-Paschimottanasana.jpg",
+      // Vinyasa poses
+      "Sun Salutation":      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Surya_Namaskar.jpg/400px-Surya_Namaskar.jpg",
+      "Chaturanga":          "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Chaturanga-Dandasana_low_pushup_yoga_pose.jpg/400px-Chaturanga-Dandasana_low_pushup_yoga_pose.jpg",
+      "Upward Dog":          "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Urdhvamukhasvanasana_yoga_pose.jpg/400px-Urdhvamukhasvanasana_yoga_pose.jpg",
+      "Pigeon Pose":         "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Kapotasana_yoga_pose.jpg/400px-Kapotasana_yoga_pose.jpg",
+      "Crow Pose":           "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Bakasana_yoga_pose.jpg/400px-Bakasana_yoga_pose.jpg",
+      // Ashtanga poses
+      "Half Moon":           "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Ardha_Chandrasana_yoga_pose.jpg/400px-Ardha_Chandrasana_yoga_pose.jpg",
+      "Boat Pose":           "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Naukasana_yoga_boat_pose.jpg/400px-Naukasana_yoga_boat_pose.jpg",
+      "Headstand":           "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Shirshasana_yoga_pose.jpg/400px-Shirshasana_yoga_pose.jpg",
+      "Lotus Pose":          "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Padmasana_Lotus_Yoga-Atha-Yugni.jpg/400px-Padmasana_Lotus_Yoga-Atha-Yugni.jpg",
+      // Yin / Restorative
+      "Butterfly Pose":      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Baddha_Konasana_yoga_pose.jpg/400px-Baddha_Konasana_yoga_pose.jpg",
+      "Dragon Pose":         "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Kapotasana_yoga_pose.jpg/400px-Kapotasana_yoga_pose.jpg",
+      "Sleeping Swan":       "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Kapotasana_yoga_pose.jpg/400px-Kapotasana_yoga_pose.jpg",
+      "Supine Twist":        "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Asana_Yoga-Atha-Yugni.jpg/400px-Asana_Yoga-Atha-Yugni.jpg",
+      "Savasana":            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Shavasana_yoga_pose.jpg/400px-Shavasana_yoga_pose.jpg",
+      "Legs Up The Wall":    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Paschimottanasana.jpg/400px-Paschimottanasana.jpg",
+    };
+    return poseImages[poseName] || "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Virabhadrasana_I.jpg/400px-Virabhadrasana_I.jpg";
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    show: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 24 } }
   };
 
   useEffect(() => {
@@ -62,25 +103,25 @@ export function YogaTab({ onLog }) {
         ))}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 14 }}>
+      <motion.div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 14 }} variants={containerVariants} initial="hidden" animate="show">
         {styleData.poses.map((pose, i) => (
-          <div key={i} style={{ background: "rgba(15,23,42,0.75)", border: "1px solid rgba(148,163,184,0.16)", borderRadius: 14, padding: "16px", boxShadow: "0 10px 24px rgba(2,6,23,0.16)" }}>
-            <img src={getYogaImage(style)} alt={pose.name} style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 12, marginBottom: 12 }} />
+          <motion.div key={pose.name + i} variants={itemVariants} whileHover={{ y: -4 }} style={{ background: "rgba(15,23,42,0.75)", border: "1px solid rgba(148,163,184,0.16)", borderRadius: 14, padding: "16px", boxShadow: "0 10px 24px rgba(2,6,23,0.16)", display: "flex", flexDirection: "column" }}>
+            <img src={getYogaImage(style, pose.name)} alt={pose.name} style={{ width: "100%", height: 160, objectFit: "cover", borderRadius: 12, marginBottom: 12 }} onError={e => { e.target.onerror = null; e.target.src = "/images/ex_squat.png"; }} />
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
               <div style={{ fontWeight: 600, fontSize: 15 }}>{pose.name}</div>
               <LevelBadge level={pose.level} />
             </div>
-            <div style={{ fontSize: 13, color: "#cbd5e1", marginBottom: 12 }}>{pose.benefit}</div>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ fontSize: 13, color: "#cbd5e1", marginBottom: 12, flex: 1 }}>{pose.benefit}</div>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "auto" }}>
               <span style={{ fontSize: 13, color: styleData.color, fontWeight: 500 }}>⏱ {pose.duration}s</span>
               <div style={{ display: "flex", gap: 6 }}>
-                <button onClick={() => window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(pose.name + ' yoga pose tutorial')}`, '_blank')} style={{ padding: "7px 12px", borderRadius: 8, border: "1px solid rgba(148,163,184,0.2)", background: "rgba(15,23,42,0.7)", color: "#cbd5e1", fontSize: 13, fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}>▶️ Watch</button>
-                <button onClick={() => startPose(pose)} style={{ padding: "7px 16px", borderRadius: 8, border: "none", background: styleData.color, color: "#fff", fontSize: 13, fontWeight: 500, cursor: "pointer" }}>Start</button>
+                <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(pose.name + ' yoga pose tutorial')}`, '_blank')} style={{ padding: "7px 12px", borderRadius: 8, border: "1px solid rgba(148,163,184,0.2)", background: "rgba(15,23,42,0.7)", color: "#cbd5e1", fontSize: 13, fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}>▶️ Watch</motion.button>
+                <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => startPose(pose)} style={{ padding: "7px 16px", borderRadius: 8, border: "none", background: styleData.color, color: "#fff", fontSize: 13, fontWeight: 500, cursor: "pointer" }}>Start</motion.button>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { LoginScreen } from "./components/auth/LoginScreen";
 import { Navbar } from "./components/common/Navbar";
@@ -35,13 +36,23 @@ export default function App() {
   return (
     <div className="app-shell">
       <Navbar tab={tab} setTab={setTab} user={user} onLogout={() => setUser(null)} />
-      
-      {tab === "home" && <HomeTab user={user} logs={logs} foodLog={foodLog} streak={streak} />}
-      {tab === "exercises" && <ExercisesTab onLog={l => setLogs(ls => [l, ...ls])} plan={plan} setPlan={setPlan} />}
-      {tab === "yoga" && <YogaTab onLog={l => setLogs(ls => [l, ...ls])} />}
-      {tab === "tracker" && <TrackerTab logs={logs} setLogs={setLogs} plan={plan} setPlan={setPlan} />}
-      {tab === "calories" && <CaloriesTab foodLog={foodLog} setFoodLog={setFoodLog} />}
-      {tab === "progress" && <ProgressTab user={user} logs={logs} foodLog={foodLog} />}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={tab}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2 }}
+          style={{ flex: 1, overflowY: "auto" }}
+        >
+          {tab === "home" && <HomeTab user={user} logs={logs} foodLog={foodLog} streak={streak} />}
+          {tab === "exercises" && <ExercisesTab onLog={l => setLogs(ls => [l, ...ls])} plan={plan} setPlan={setPlan} />}
+          {tab === "yoga" && <YogaTab onLog={l => setLogs(ls => [l, ...ls])} />}
+          {tab === "tracker" && <TrackerTab logs={logs} setLogs={setLogs} plan={plan} setPlan={setPlan} />}
+          {tab === "calories" && <CaloriesTab foodLog={foodLog} setFoodLog={setFoodLog} />}
+          {tab === "progress" && <ProgressTab user={user} logs={logs} foodLog={foodLog} />}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
