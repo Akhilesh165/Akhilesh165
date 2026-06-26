@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Back workout illustration">
+  <rect width="800" height="500" rx="36" fill="#08111f"/>
+  <circle cx="150" cy="140" r="110" fill="#38bdf8" fill-opacity="0.14"/>
+  <circle cx="650" cy="360" r="120" fill="#f97316" fill-opacity="0.16"/>
+  <rect x="220" y="150" width="360" height="220" rx="50" fill="#f8fafc" fill-opacity="0.95"/>
+  <path d="M315 240c44-64 126-74 170-18l-36 70h-96l-38-52Z" fill="#0f172a"/>
+  <path d="M325 260c20-22 44-40 76-40 22 0 44 8 60 24" stroke="#f97316" stroke-width="16" stroke-linecap="round"/>
+  <path d="M418 205v130" stroke="#38bdf8" stroke-width="16" stroke-linecap="round"/>
+  <path d="M298 235h-56m278 0h56" stroke="#1e293b" stroke-width="14" stroke-linecap="round"/>
+</svg>

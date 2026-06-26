@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Yoga illustration">
+  <rect width="800" height="500" rx="36" fill="#08111f"/>
+  <circle cx="620" cy="140" r="110" fill="#38bdf8" fill-opacity="0.16"/>
+  <circle cx="190" cy="360" r="120" fill="#f97316" fill-opacity="0.16"/>
+  <rect x="220" y="160" width="360" height="220" rx="42" fill="#f8fafc" fill-opacity="0.95"/>
+  <circle cx="400" cy="220" r="78" fill="#1e293b"/>
+  <path d="M330 286c36-42 104-42 140 0" stroke="#f97316" stroke-width="16" stroke-linecap="round"/>
+  <path d="M360 260v96m80-96v96" stroke="#38bdf8" stroke-width="14" stroke-linecap="round"/>
+  <path d="M310 202c32-30 52-40 90-40 38 0 58 10 90 40" stroke="#1e293b" stroke-width="13" stroke-linecap="round"/>
+</svg>
