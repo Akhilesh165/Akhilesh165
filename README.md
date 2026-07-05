@@ -1,16 +1,59 @@
-# React + Vite
+# Viteflow - Fitness Tracker & Companion
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive, and beautiful fitness tracking web application built with React, Vite, and Framer Motion.
 
-Currently, two official plugins are available:
+![Viteflow Logo](public/images/ex_bench_press.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Exercise Library:** A comprehensive library of gym and calisthenics exercises with proper form illustrations.
+- **Yoga Poses:** A detailed collection of yoga poses across different styles (Hatha, Vinyasa, Ashtanga, Yin) with real-life demonstration photos.
+- **Calorie Tracker:** Track your daily caloric intake and macronutrients to stay on top of your diet goals.
+- **Progress Tracking:** Monitor your fitness journey with visual progress indicators.
+- **Workout Planner:** Plan your workouts efficiently.
+- **Beautiful UI:** A sleek, dark-themed user interface with smooth micro-animations powered by Framer Motion.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Technologies Used
 
-## Expanding the ESLint configuration
+- **React:** For building the user interface.
+- **Vite:** Next-generation frontend tooling for fast builds and hot module replacement.
+- **Framer Motion:** For fluid and engaging animations.
+- **CSS:** Custom styling for a unique and professional look.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher recommended)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Akhilesh165/Akhilesh165.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd Akhilesh165
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Screenshots
+
+*More screenshots coming soon!*
+
+## Contributing
+
+Contributions are welcome! Feel free to open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License.
