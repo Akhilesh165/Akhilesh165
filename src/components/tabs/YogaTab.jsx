@@ -114,10 +114,20 @@ export function YogaTab({ onLog }) {
             <div style={{ fontSize: 13, color: "#cbd5e1", marginBottom: 12, flex: 1 }}>{pose.benefit}</div>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "auto" }}>
               <span style={{ fontSize: 13, color: styleData.color, fontWeight: 500 }}>⏱ {pose.duration}s</span>
-              <div style={{ display: "flex", gap: 6 }}>
-                <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(pose.name + ' yoga pose tutorial')}`, '_blank')} style={{ padding: "7px 12px", borderRadius: 8, border: "1px solid rgba(148,163,184,0.2)", background: "rgba(15,23,42,0.7)", color: "#cbd5e1", fontSize: 13, fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}>▶️ Watch</motion.button>
-                <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => startPose(pose)} style={{ padding: "7px 16px", borderRadius: 8, border: "none", background: styleData.color, color: "#fff", fontSize: 13, fontWeight: 500, cursor: "pointer" }}>Start</motion.button>
-              </div>
+                <div style={{ display: "flex", gap: 6 }}>
+                  <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => {
+                    if ("speechSynthesis" in window) {
+                      const utterance = new SpeechSynthesisUtterance(`${pose.name}. ${pose.benefit}. Hold for ${pose.duration} seconds.`);
+                      utterance.rate = 0.9;
+                      window.speechSynthesis.cancel();
+                      window.speechSynthesis.speak(utterance);
+                    } else {
+                      setToast("Text-to-speech not supported in this browser.");
+                    }
+                  }} style={{ padding: "7px 12px", borderRadius: 8, border: "1px solid rgba(148,163,184,0.2)", background: "rgba(15,23,42,0.7)", color: "#cbd5e1", fontSize: 13, fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}>🎧 Coach</motion.button>
+                  <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(pose.name + ' yoga pose tutorial')}`, '_blank')} style={{ padding: "7px 12px", borderRadius: 8, border: "1px solid rgba(148,163,184,0.2)", background: "rgba(15,23,42,0.7)", color: "#cbd5e1", fontSize: 13, fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}>▶️ Watch</motion.button>
+                  <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => startPose(pose)} style={{ padding: "7px 16px", borderRadius: 8, border: "none", background: styleData.color, color: "#fff", fontSize: 13, fontWeight: 500, cursor: "pointer" }}>Start</motion.button>
+                </div>
             </div>
           </motion.div>
         ))}

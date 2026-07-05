@@ -235,6 +235,16 @@ export function ExercisesTab({ onLog, plan, setPlan }) {
                       </div>
                     )}
                     <div className="exercise-actions">
+                      <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="action-btn secondary" onClick={() => {
+                        if ("speechSynthesis" in window) {
+                          const utterance = new SpeechSynthesisUtterance(`Coaching note for ${ex.name}: ${ex.notes}`);
+                          utterance.rate = 0.9;
+                          window.speechSynthesis.cancel();
+                          window.speechSynthesis.speak(utterance);
+                        } else {
+                          setToast("Text-to-speech not supported in this browser.");
+                        }
+                      }}>🎧 Coach</motion.button>
                       <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="action-btn secondary" onClick={() => window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(ex.name + ' exercise tutorial')}`, '_blank')}>▶ Watch</motion.button>
                       <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="action-btn" onClick={() => addToPlan(ex)}>+ Plan</motion.button>
                       <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="action-btn primary" onClick={() => logEx(ex)}>Log</motion.button>
