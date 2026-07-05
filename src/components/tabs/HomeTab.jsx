@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { StatCard } from "../common/StatCard";
 
 export function HomeTab({ user, logs, foodLog, streak }) {
@@ -12,6 +14,40 @@ export function HomeTab({ user, logs, foodLog, streak }) {
     "Consistency beats intensity every time ✅",
   ];
   const tip = tips[new Date().getDay() % tips.length];
+
+  // Testimonials data
+  const testimonials = [
+    {
+      id: 1,
+      name: "Sarah Jenkins",
+      role: "Lost 15 lbs in 2 months",
+      text: "Viteflow completely changed how I track my workouts. The coaching cues are super helpful, and the calorie tracker keeps me accountable!",
+      rating: "⭐⭐⭐⭐⭐"
+    },
+    {
+      id: 2,
+      name: "David Chen",
+      role: "Gained 10 lbs muscle",
+      text: "The exercise library is fantastic. I finally know how to do a proper Bulgarian Split Squat. The UI is sleek and fast. Highly recommended.",
+      rating: "⭐⭐⭐⭐⭐"
+    },
+    {
+      id: 3,
+      name: "Emma Watson",
+      role: "Yoga Enthusiast",
+      text: "I love the new Yoga section! The actual photos of the poses make it so easy to follow along. Best fitness companion app I've used.",
+      rating: "⭐⭐⭐⭐⭐"
+    }
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    }, 5000); // Auto-slide every 5 seconds
+    return () => clearInterval(timer);
+  }, [testimonials.length]);
 
   return (
     <div className="page-shell">
@@ -47,6 +83,71 @@ export function HomeTab({ user, logs, foodLog, streak }) {
         <StatCard label="Active mins"    value={activeMins}     unit="min"  color="#ffc04d" bg="rgba(255,192,77,0.10)" />
         <StatCard label="Workouts"       value={todayLogs.length} unit="done" color="#ff8c42" bg="rgba(255,140,60,0.10)" />
         <StatCard label="Streak"         value={streak}         unit="days" color="#fff5ee" bg="rgba(16,6,0,0.80)"     />
+      </div>
+
+      {/* Testimonial Slider Section */}
+      <div className="theme-card" style={{ overflow: "hidden", position: "relative" }}>
+        <div className="section-header">
+          <div>
+            <div className="section-title">Success Stories</div>
+            <div className="section-meta">See what our community is saying</div>
+          </div>
+        </div>
+
+        <div style={{ height: "180px", position: "relative" }}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.4 }}
+              style={{
+                position: "absolute",
+                width: "100%",
+                background: "rgba(20,8,0,0.60)",
+                borderRadius: 12,
+                padding: "20px",
+                border: "1px solid rgba(255,106,0,0.14)",
+                display: "flex",
+                flexDirection: "column",
+                gap: 12,
+              }}
+            >
+              <div style={{ fontSize: 14, color: "#fff5ee", fontStyle: "italic", lineHeight: 1.5 }}>
+                "{testimonials[currentIndex].text}"
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+                <div>
+                  <div style={{ fontWeight: 700, color: "#ff6a00", fontSize: 15 }}>{testimonials[currentIndex].name}</div>
+                  <div style={{ fontSize: 12, color: "#c9a98a" }}>{testimonials[currentIndex].role}</div>
+                </div>
+                <div style={{ fontSize: 12 }}>{testimonials[currentIndex].rating}</div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Slider Dots */}
+        <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 12 }}>
+          {testimonials.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentIndex(idx)}
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+                border: "none",
+                background: currentIndex === idx ? "#ff6a00" : "rgba(255,255,255,0.2)",
+                cursor: "pointer",
+                padding: 0,
+                transition: "background 0.2s ease"
+              }}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Today's logged workouts */}
