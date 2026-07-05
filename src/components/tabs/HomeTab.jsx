@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { StatCard } from "../common/StatCard";
+import { Stopwatch } from "../common/Stopwatch";
 
 export function HomeTab({ user, logs, foodLog, streak }) {
   const totalCal   = foodLog.reduce((s, f) => s + f.cal, 0);
@@ -84,6 +85,8 @@ export function HomeTab({ user, logs, foodLog, streak }) {
         <StatCard label="Workouts"       value={todayLogs.length} unit="done" color="#ff8c42" bg="rgba(255,140,60,0.10)" />
         <StatCard label="Streak"         value={streak}         unit="days" color="#fff5ee" bg="rgba(16,6,0,0.80)"     />
       </div>
+
+      <Stopwatch />
 
       {/* Testimonial Slider Section */}
       <div className="theme-card" style={{ overflow: "hidden", position: "relative" }}>
