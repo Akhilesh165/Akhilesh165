@@ -48,7 +48,7 @@ A modern, responsive, and beautiful fitness tracking web application built with 
 
 ## Screenshots
 
-*More screenshots coming soon!*
+![Viteflow UI Screenshot](public/images/screenshot.png)
 
 ## Contributing
 
