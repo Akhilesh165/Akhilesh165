@@ -43,6 +43,7 @@ export function ExercisesTab({ onLog, plan, setPlan }) {
   // These are exact illustrations showing the correct movement for each exercise
   const getExerciseImage = (exerciseName) => {
     const WGER = "https://wger.de/media/exercise-images";
+    const WIKI = "https://upload.wikimedia.org/wikipedia/commons/thumb";
     const exerciseImages = {
       // ── GYM: CHEST ──────────────────────────────────────────
       "Flat Bench Press":        `${WGER}/192/Bench-press-1.png`,
@@ -65,35 +66,50 @@ export function ExercisesTab({ onLog, plan, setPlan }) {
       "Skull Crusher":           `${WGER}/84/Lying-close-grip-triceps-press-to-chin-1.png`,
       "Preacher Curl":           `${WGER}/193/Preacher-curl-3-1.png`,
       "Tricep Pushdown":         `${WGER}/138/Hammer-curls-with-rope-1.png`,
+      "Dumbbell Curl":           `${WGER}/81/Biceps-curl-1.png`,
+      "Chair Tricep Dip":        `${WGER}/83/Bench-dips-1.png`,
       // ── GYM: CORE ───────────────────────────────────────────
       "Cable Crunch":            `${WGER}/91/Crunches-1.png`,
       "Hanging Leg Raise":       `${WGER}/125/Leg-raises-2.png`,
       "Ab Wheel Rollout":        `${WGER}/56/Decline-crunch-1.png`,
       "Oblique Crunch Machine":  `${WGER}/176/Cross-body-crunch-1.png`,
+      "Crunch":                  `${WGER}/91/Crunches-1.png`,
+      "Bicycle Crunch":          `${WGER}/176/Cross-body-crunch-1.png`,
+      "Russian Twist":           `${WGER}/176/Cross-body-crunch-1.png`,
+      "Leg Raise":               `${WGER}/125/Leg-raises-2.png`,
       // ── GYM: LEGS ───────────────────────────────────────────
       "Barbell Squat":           `${WGER}/191/Front-squat-1-857x1024.png`,
       "Leg Press":               `${WGER}/130/Narrow-stance-hack-squats-1-1024x721.png`,
       "Leg Curl":                `${WGER}/154/lying-leg-curl-machine-large-1.png`,
       "Hack Squat":              `${WGER}/130/Narrow-stance-hack-squats-1-1024x721.png`,
       "Calf Raise Machine":      `${WGER}/117/seated-leg-curl-large-1.png`,
+      "Bodyweight Squat":        `${WGER}/191/Front-squat-1-857x1024.png`,
+      "Reverse Lunge":           `${WGER}/113/Walking-lunges-1.png`,
+      "Wall Sit":                `${WGER}/191/Front-squat-1-857x1024.png`,
+      "Calf Raise":              `${WGER}/117/seated-leg-curl-large-1.png`,
       // ── GYM: GLUTES ─────────────────────────────────────────
       "Hip Thrust":              `${WGER}/116/Good-mornings-2.png`,
       "Glute Kickback Machine":  `${WGER}/118/standing-leg-curls-large-1.png`,
       "Romanian Deadlift":       `${WGER}/161/Dead-lifts-2.png`,
       "Cable Pull Through":      `${WGER}/116/Good-mornings-2.png`,
+      "Glute Bridge":            `${WGER}/116/Good-mornings-2.png`,
       // ── GYM: CARDIO ─────────────────────────────────────────
-      "Treadmill Run":           `/images/ex_bench_press.png`,
-      "Elliptical":              `/images/ex_squat.png`,
-      "Rowing Machine":          `/images/ex_deadlift.png`,
-      "Stairmaster":             `/images/ex_overhead_press.png`,
+      "Treadmill Run":           `${WIKI}/7/7c/Treadmill_running.jpg/400px-Treadmill_running.jpg`,
+      "Elliptical":              `${WIKI}/3/3a/Elliptical_trainer_machine.jpg/400px-Elliptical_trainer_machine.jpg`,
+      "Rowing Machine":          `${WIKI}/3/33/Indoor_rower.jpg/400px-Indoor_rower.jpg`,
+      "Stairmaster":             `${WIKI}/2/2a/Stair_climber.jpg/400px-Stair_climber.jpg`,
+      "Jump Rope":               `${WIKI}/3/3f/Skipping_rope.jpg/400px-Skipping_rope.jpg`,
       // ── CALISTHENICS: UPPER BODY ────────────────────────────
-      "Push-Up":                 `/images/ex_pushup.png`,
-      "Pull-Up":                 `/images/ex_pullup.png`,
-      "Diamond Push-Up":         `/images/ex_pushup.png`,
-      "Pike Push-Up":            `/images/ex_pushup.png`,
+      "Push-Up":                 `${WGER}/111/Push-ups-1.png`,
+      "Wall Push-Up":            `${WGER}/111/Push-ups-1.png`,
+      "Pull-Up":                 `${WGER}/107/Pull-ups-1.png`,
+      "Diamond Push-Up":         `${WGER}/111/Push-ups-1.png`,
+      "Pike Push-Up":            `${WGER}/111/Push-ups-1.png`,
       "Dip":                     `${WGER}/83/Bench-dips-1.png`,
+      "Shoulder Tap":            `${WGER}/111/Push-ups-1.png`,
       // ── CALISTHENICS: CORE ──────────────────────────────────
       "Plank":                   `${WGER}/91/Crunches-1.png`,
+      "Plank Hold":              `${WGER}/91/Crunches-1.png`,
       "L-Sit":                   `${WGER}/125/Leg-raises-2.png`,
       "Dragon Flag":             `${WGER}/56/Decline-crunch-1.png`,
       "Hollow Body Hold":        `${WGER}/176/Cross-body-crunch-1.png`,
@@ -103,25 +119,56 @@ export function ExercisesTab({ onLog, plan, setPlan }) {
       "Walking Lunge":           `${WGER}/113/Walking-lunges-1.png`,
       "Nordic Curl":             `${WGER}/154/lying-leg-curl-machine-large-1.png`,
       // ── CALISTHENICS: SKILL ─────────────────────────────────
-      "Muscle-Up":               `/images/ex_pullup.png`,
-      "Handstand Hold":          `/images/ex_overhead_press.png`,
-      "Front Lever":             `/images/ex_pullup.png`,
-      "Human Flag Progression":  `/images/ex_pullup.png`,
-      // ── CALISTHENICS: ATHLETIC ──────────────────────────────
-      "Burpee":                  `/images/ex_pushup.png`,
+      "Muscle-Up":               `${WGER}/107/Pull-ups-1.png`,
+      "Handstand Hold":          `${WGER}/119/seated-barbell-shoulder-press-large-1.png`,
+      "Front Lever":             `${WGER}/107/Pull-ups-1.png`,
+      "Human Flag Progression":  `${WGER}/107/Pull-ups-1.png`,
+      // ── CALISTHENICS: ATHLETIC / FULL BODY ──────────────────
+      "Burpee":                  `${WGER}/111/Push-ups-1.png`,
+      "AMRAP Burpee":            `${WGER}/111/Push-ups-1.png`,
       "Box Jump":                `${WGER}/191/Front-squat-1-857x1024.png`,
-      "Bear Crawl":              `/images/ex_pushup.png`,
+      "Bear Crawl":              `${WGER}/111/Push-ups-1.png`,
+      "Sprint Drill":            `${WIKI}/7/7c/Treadmill_running.jpg/400px-Treadmill_running.jpg`,
+      "Mountain Climber":        `${WGER}/111/Push-ups-1.png`,
+      "Inchworm":                `${WGER}/111/Push-ups-1.png`,
+      "Tabata (20/10)":          `${WGER}/111/Push-ups-1.png`,
+      "EMOM Push-Up":            `${WGER}/111/Push-ups-1.png`,
+      "5-Min Express":           `${WGER}/111/Push-ups-1.png`,
+      "10-Min Full Body":        `${WGER}/111/Push-ups-1.png`,
+      "20-Min Fat Burn":         `${WGER}/111/Push-ups-1.png`,
+      // ── MOBILITY & STRETCHING ───────────────────────────────
+      "Hip Flexor Stretch":      `${WIKI}/f/f6/Paschimottanasana.jpg/400px-Paschimottanasana.jpg`,
+      "Hip Flexor Hold":         `${WIKI}/f/f6/Paschimottanasana.jpg/400px-Paschimottanasana.jpg`,
+      "Shoulder Dislocate":      `${WGER}/148/lateral-dumbbell-raises-large-2.png`,
+      "Wrist Prep Circles":      `${WIKI}/e/e6/Asana_Yoga-Atha-Yugni.jpg/400px-Asana_Yoga-Atha-Yugni.jpg`,
+      "Ankle Mobility Drill":    `${WIKI}/e/e6/Asana_Yoga-Atha-Yugni.jpg/400px-Asana_Yoga-Atha-Yugni.jpg`,
+      "Morning Full Stretch":    `${WIKI}/c/c0/Vriksasana_yoga_pose.jpg/400px-Vriksasana_yoga_pose.jpg`,
+      "Spinal Twist":            `${WIKI}/e/e6/Asana_Yoga-Atha-Yugni.jpg/400px-Asana_Yoga-Atha-Yugni.jpg`,
+      "Cool-Down Flow":          `${WIKI}/6/6e/Balasana_yoga.jpg/400px-Balasana_yoga.jpg`,
+      "Resistance Band Row":     `${WGER}/143/Cable-seated-rows-2.png`,
+      "Kettlebell Swing":        `${WGER}/116/Good-mornings-2.png`,
       // ── NECK / FACE ─────────────────────────────────────────
       "Neck Press Machine":      `${WGER}/53/Shoulder-press-machine-2.png`,
-      "Jaw Resistance Pull":     `${WGER}/148/lateral-dumbbell-raises-large-2.png`,
-      "Neck Bridge":             `${WGER}/116/Good-mornings-2.png`,
-      "Lateral Neck Stretch":    `${WGER}/148/lateral-dumbbell-raises-large-2.png`,
+      "Jaw Resistance Pull":     `${WIKI}/4/41/Resistance_band.jpg/400px-Resistance_band.jpg`,
+      "Neck Bridge":             `${WIKI}/3/38/Tadasana_Yoga-Atha-Yugni.jpg/400px-Tadasana_Yoga-Atha-Yugni.jpg`,
+      "Lateral Neck Stretch":    `${WGER}/53/Shoulder-press-machine-2.png`,
       "Chin Tuck":               `${WGER}/53/Shoulder-press-machine-2.png`,
       "Head Roll":               `${WGER}/53/Shoulder-press-machine-2.png`,
       "Jaw Resistance Push":     `${WGER}/53/Shoulder-press-machine-2.png`,
+      "Face Yoga Sequence":      `${WIKI}/3/38/Tadasana_Yoga-Atha-Yugni.jpg/400px-Tadasana_Yoga-Atha-Yugni.jpg`,
+      "Forehead Smoother":       `${WIKI}/3/38/Tadasana_Yoga-Atha-Yugni.jpg/400px-Tadasana_Yoga-Atha-Yugni.jpg`,
+      "Cheek Puff & Release":    `${WIKI}/3/38/Tadasana_Yoga-Atha-Yugni.jpg/400px-Tadasana_Yoga-Atha-Yugni.jpg`,
+      "Eye Focus Drill":         `${WIKI}/3/38/Tadasana_Yoga-Atha-Yugni.jpg/400px-Tadasana_Yoga-Atha-Yugni.jpg`,
+      "Neck Tilt Stretch":       `${WGER}/53/Shoulder-press-machine-2.png`,
     };
 
-    return exerciseImages[exerciseName] || `/images/ex_bench_press.png`;
+    // If an exercise is somehow missing, try to find a partial match or fallback
+    if (exerciseImages[exerciseName]) return exerciseImages[exerciseName];
+    if (exerciseName.includes("Band") || exerciseName.includes("Resistance")) return `${WIKI}/4/41/Resistance_band.jpg/400px-Resistance_band.jpg`;
+    if (exerciseName.includes("Neck")) return `${WGER}/53/Shoulder-press-machine-2.png`;
+    if (exerciseName.includes("Crunch")) return `${WGER}/91/Crunches-1.png`;
+    
+    return `${WGER}/192/Bench-press-1.png`;
   };
 
   const containerVariants = {
