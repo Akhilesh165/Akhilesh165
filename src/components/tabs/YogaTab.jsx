@@ -103,17 +103,21 @@ export function YogaTab({ onLog }) {
         ))}
       </div>
 
-      <motion.div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 14 }} variants={containerVariants} initial="hidden" animate="show">
+      <motion.div style={{ display: "flex", flexDirection: "column", gap: 0 }} variants={containerVariants} initial="hidden" animate="show">
         {styleData.poses.map((pose, i) => (
-          <motion.div key={pose.name + i} variants={itemVariants} whileHover={{ y: -4 }} style={{ background: "rgba(15,23,42,0.75)", border: "1px solid rgba(148,163,184,0.16)", borderRadius: 14, padding: "16px", boxShadow: "0 10px 24px rgba(2,6,23,0.16)", display: "flex", flexDirection: "column" }}>
-            <img src={getYogaImage(style, pose.name)} alt={pose.name} style={{ width: "100%", height: 160, objectFit: "cover", borderRadius: 12, marginBottom: 12 }} onError={e => { e.target.onerror = null; e.target.src = "/images/ex_squat.png"; }} />
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
-              <div style={{ fontWeight: 600, fontSize: 15 }}>{pose.name}</div>
-              <LevelBadge level={pose.level} />
+          <motion.div key={pose.name + i} variants={itemVariants} whileHover={{ background: "rgba(255,255,255,0.02)" }} style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 16, padding: "16px 8px", borderBottom: "1px solid rgba(255,255,255,0.08)", background: "transparent", transition: "all 0.2s ease" }}>
+            <div style={{ width: 80, height: 80, background: "rgba(255,255,255,0.03)", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, overflow: "hidden" }}>
+              <img src={getYogaImage(style, pose.name)} alt={pose.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} onError={e => { e.target.onerror = null; e.target.src = "/images/ex_squat.png"; }} />
             </div>
-            <div style={{ fontSize: 13, color: "#cbd5e1", marginBottom: 12, flex: 1 }}>{pose.benefit}</div>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "auto" }}>
-              <span style={{ fontSize: 13, color: styleData.color, fontWeight: 500 }}>⏱ {pose.duration}s</span>
+            
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+                <div style={{ fontSize: 17, fontWeight: 700, color: "#f8fafc", letterSpacing: "-0.02em" }}>{pose.name}</div>
+                <LevelBadge level={pose.level} />
+              </div>
+              <div style={{ fontSize: 13, color: "#cbd5e1", marginBottom: 8 }}>{pose.benefit}</div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 13, color: styleData.color, fontWeight: 500 }}>⏱ {pose.duration}s</span>
                 <div style={{ display: "flex", gap: 6 }}>
                   <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => {
                     if ("speechSynthesis" in window) {
@@ -124,10 +128,11 @@ export function YogaTab({ onLog }) {
                     } else {
                       setToast("Text-to-speech not supported in this browser.");
                     }
-                  }} style={{ padding: "7px 12px", borderRadius: 8, border: "1px solid rgba(148,163,184,0.2)", background: "rgba(15,23,42,0.7)", color: "#cbd5e1", fontSize: 13, fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}>🎧 Coach</motion.button>
-                  <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(pose.name + ' yoga pose tutorial')}`, '_blank')} style={{ padding: "7px 12px", borderRadius: 8, border: "1px solid rgba(148,163,184,0.2)", background: "rgba(15,23,42,0.7)", color: "#cbd5e1", fontSize: 13, fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}>▶️ Watch</motion.button>
-                  <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => startPose(pose)} style={{ padding: "7px 16px", borderRadius: 8, border: "none", background: styleData.color, color: "#fff", fontSize: 13, fontWeight: 500, cursor: "pointer" }}>Start</motion.button>
+                  }} style={{ padding: "6px 10px", borderRadius: 8, border: "1px solid rgba(148,163,184,0.2)", background: "rgba(15,23,42,0.7)", color: "#cbd5e1", fontSize: 12, fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}>🎧 Coach</motion.button>
+                  <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(pose.name + ' yoga pose tutorial')}`, '_blank')} style={{ padding: "6px 10px", borderRadius: 8, border: "1px solid rgba(148,163,184,0.2)", background: "rgba(15,23,42,0.7)", color: "#cbd5e1", fontSize: 12, fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}>▶️ Watch</motion.button>
+                  <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => startPose(pose)} style={{ padding: "6px 14px", borderRadius: 8, border: "none", background: styleData.color, color: "#fff", fontSize: 12, fontWeight: 500, cursor: "pointer" }}>Start</motion.button>
                 </div>
+              </div>
             </div>
           </motion.div>
         ))}
