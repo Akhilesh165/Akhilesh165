@@ -9,6 +9,7 @@ import { YogaTab } from "./components/tabs/YogaTab";
 import { TrackerTab } from "./components/tabs/TrackerTab";
 import { CaloriesTab } from "./components/tabs/CaloriesTab";
 import { ProgressTab } from "./components/tabs/ProgressTab";
+import { AICoachTab } from "./components/tabs/AICoachTab";
 import "./App.css";
 
 export default function App() {
@@ -51,6 +52,7 @@ export default function App() {
           {tab === "tracker" && <TrackerTab logs={logs} setLogs={setLogs} plan={plan} setPlan={setPlan} />}
           {tab === "calories" && <CaloriesTab foodLog={foodLog} setFoodLog={setFoodLog} />}
           {tab === "progress" && <ProgressTab user={user} logs={logs} foodLog={foodLog} />}
+          {tab === "ai" && <AICoachTab user={user} plan={plan} setPlan={setPlan} />}
         </motion.div>
       </AnimatePresence>
     </div>

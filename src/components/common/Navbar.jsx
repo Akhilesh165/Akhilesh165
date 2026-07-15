@@ -5,6 +5,7 @@ export function Navbar({ tab, setTab, user, onLogout }) {
     { id: "home",      label: "Home",     icon: "🏠" },
     { id: "exercises", label: "Exercise", icon: "💪" },
     { id: "yoga",      label: "Yoga",     icon: "🧘" },
+    { id: "ai",        label: "AI Coach", icon: "🤖" },
     { id: "tracker",   label: "Track",    icon: "📋" },
     { id: "calories",  label: "Calories", icon: "🔥" },
     { id: "progress",  label: "Progress", icon: "📈" },

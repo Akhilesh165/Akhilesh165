@@ -17,34 +17,34 @@ export function YogaTab({ onLog }) {
     // Yoga pose images — using open CDN sources per pose name
     const poseImages = {
       // Hatha poses
-      "Mountain Pose":       "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tadasana_Yoga-Atha-Yugni.jpg/400px-Tadasana_Yoga-Atha-Yugni.jpg",
-      "Downward Dog":        "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Asana_Yoga-Atha-Yugni.jpg/400px-Asana_Yoga-Atha-Yugni.jpg",
-      "Warrior I":           "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Virabhadrasana_I.jpg/400px-Virabhadrasana_I.jpg",
-      "Warrior II":          "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Virabhadrasana_II.jpg/400px-Virabhadrasana_II.jpg",
-      "Tree Pose":           "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Vriksasana_yoga_pose.jpg/400px-Vriksasana_yoga_pose.jpg",
-      "Child's Pose":        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Balasana_yoga.jpg/400px-Balasana_yoga.jpg",
-      "Triangle Pose":       "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Utthita_Trikonasana_Yoga-Atha-Yugni.jpg/400px-Utthita_Trikonasana_Yoga-Atha-Yugni.jpg",
-      "Seated Forward Bend": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Paschimottanasana.jpg/400px-Paschimottanasana.jpg",
+      "Mountain Pose":       "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=400&q=80",
+      "Downward Dog":        "https://images.unsplash.com/photo-1599901541100-246e7f2fdf9f?auto=format&fit=crop&w=400&q=80",
+      "Warrior I":           "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=400&q=80",
+      "Warrior II":          "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=400&q=80",
+      "Tree Pose":           "https://images.unsplash.com/photo-1552286450-32b03fb52eb7?auto=format&fit=crop&w=400&q=80",
+      "Child's Pose":        "https://images.unsplash.com/photo-1506126613657-264f57b28f8d?auto=format&fit=crop&w=400&q=80",
+      "Triangle Pose":       "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=400&q=80",
+      "Seated Forward Bend": "https://images.unsplash.com/photo-1599901541100-246e7f2fdf9f?auto=format&fit=crop&w=400&q=80",
       // Vinyasa poses
-      "Sun Salutation":      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Surya_Namaskar.jpg/400px-Surya_Namaskar.jpg",
-      "Chaturanga":          "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Chaturanga-Dandasana_low_pushup_yoga_pose.jpg/400px-Chaturanga-Dandasana_low_pushup_yoga_pose.jpg",
-      "Upward Dog":          "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Urdhvamukhasvanasana_yoga_pose.jpg/400px-Urdhvamukhasvanasana_yoga_pose.jpg",
-      "Pigeon Pose":         "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Kapotasana_yoga_pose.jpg/400px-Kapotasana_yoga_pose.jpg",
-      "Crow Pose":           "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Bakasana_yoga_pose.jpg/400px-Bakasana_yoga_pose.jpg",
+      "Sun Salutation":      "https://images.unsplash.com/photo-1531259539304-8b010cc950a7?auto=format&fit=crop&w=400&q=80",
+      "Chaturanga":          "https://images.unsplash.com/photo-1599901541100-246e7f2fdf9f?auto=format&fit=crop&w=400&q=80",
+      "Upward Dog":          "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=400&q=80",
+      "Pigeon Pose":         "https://images.unsplash.com/photo-1552286450-32b03fb52eb7?auto=format&fit=crop&w=400&q=80",
+      "Crow Pose":           "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=400&q=80",
       // Ashtanga poses
-      "Half Moon":           "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Ardha_Chandrasana_yoga_pose.jpg/400px-Ardha_Chandrasana_yoga_pose.jpg",
-      "Boat Pose":           "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Naukasana_yoga_boat_pose.jpg/400px-Naukasana_yoga_boat_pose.jpg",
-      "Headstand":           "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Shirshasana_yoga_pose.jpg/400px-Shirshasana_yoga_pose.jpg",
-      "Lotus Pose":          "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Padmasana_Lotus_Yoga-Atha-Yugni.jpg/400px-Padmasana_Lotus_Yoga-Atha-Yugni.jpg",
+      "Half Moon":           "https://images.unsplash.com/photo-1552286450-32b03fb52eb7?auto=format&fit=crop&w=400&q=80",
+      "Boat Pose":           "https://images.unsplash.com/photo-1506126613657-264f57b28f8d?auto=format&fit=crop&w=400&q=80",
+      "Headstand":           "https://images.unsplash.com/photo-1531259539304-8b010cc950a7?auto=format&fit=crop&w=400&q=80",
+      "Lotus Pose":          "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=400&q=80",
       // Yin / Restorative
-      "Butterfly Pose":      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Baddha_Konasana_yoga_pose.jpg/400px-Baddha_Konasana_yoga_pose.jpg",
-      "Dragon Pose":         "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Kapotasana_yoga_pose.jpg/400px-Kapotasana_yoga_pose.jpg",
-      "Sleeping Swan":       "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Kapotasana_yoga_pose.jpg/400px-Kapotasana_yoga_pose.jpg",
-      "Supine Twist":        "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Asana_Yoga-Atha-Yugni.jpg/400px-Asana_Yoga-Atha-Yugni.jpg",
-      "Savasana":            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Shavasana_yoga_pose.jpg/400px-Shavasana_yoga_pose.jpg",
-      "Legs Up The Wall":    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Paschimottanasana.jpg/400px-Paschimottanasana.jpg",
+      "Butterfly Pose":      "https://images.unsplash.com/photo-1552286450-32b03fb52eb7?auto=format&fit=crop&w=400&q=80",
+      "Dragon Pose":         "https://images.unsplash.com/photo-1506126613657-264f57b28f8d?auto=format&fit=crop&w=400&q=80",
+      "Sleeping Swan":       "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=400&q=80",
+      "Supine Twist":        "https://images.unsplash.com/photo-1599901541100-246e7f2fdf9f?auto=format&fit=crop&w=400&q=80",
+      "Savasana":            "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=400&q=80",
+      "Legs Up The Wall":    "https://images.unsplash.com/photo-1506126613657-264f57b28f8d?auto=format&fit=crop&w=400&q=80",
     };
-    return poseImages[poseName] || "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Virabhadrasana_I.jpg/400px-Virabhadrasana_I.jpg";
+    return poseImages[poseName] || "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=400&q=80";
   };
 
   const containerVariants = {
