@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Chest workout illustration">
+  <rect width="800" height="500" rx="36" fill="#08111f"/>
+  <circle cx="640" cy="140" r="120" fill="#f97316" fill-opacity="0.16"/>
+  <circle cx="180" cy="360" r="140" fill="#38bdf8" fill-opacity="0.16"/>
+  <rect x="240" y="170" width="320" height="180" rx="50" fill="#f8fafc" fill-opacity="0.92"/>
+  <rect x="286" y="128" width="110" height="88" rx="26" fill="#1e293b"/>
+  <rect x="404" y="128" width="110" height="88" rx="26" fill="#1e293b"/>
+  <rect x="300" y="210" width="210" height="84" rx="32" fill="#f97316"/>
+  <path d="M330 235h150" stroke="#fff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M360 270v34m86-34v34" stroke="#fff" stroke-width="14" stroke-linecap="round"/>
+</svg>

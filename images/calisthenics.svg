@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Calisthenics workout illustration">
+  <rect width="800" height="500" rx="36" fill="#08111f"/>
+  <circle cx="620" cy="150" r="110" fill="#f97316" fill-opacity="0.16"/>
+  <circle cx="190" cy="360" r="120" fill="#38bdf8" fill-opacity="0.14"/>
+  <rect x="218" y="160" width="364" height="204" rx="42" fill="#f8fafc" fill-opacity="0.95"/>
+  <path d="M300 325c24-52 44-82 100-82 56 0 78 30 100 82" stroke="#1e293b" stroke-width="18" stroke-linecap="round" fill="none"/>
+  <path d="M330 240h140" stroke="#f97316" stroke-width="16" stroke-linecap="round"/>
+  <path d="M360 190v-44m80 44v-44" stroke="#38bdf8" stroke-width="14" stroke-linecap="round"/>
+</svg>

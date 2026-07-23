@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Core workout illustration">
+  <rect width="800" height="500" rx="36" fill="#08111f"/>
+  <circle cx="180" cy="140" r="110" fill="#38bdf8" fill-opacity="0.14"/>
+  <circle cx="640" cy="360" r="120" fill="#f97316" fill-opacity="0.16"/>
+  <rect x="238" y="160" width="324" height="200" rx="42" fill="#f8fafc" fill-opacity="0.95"/>
+  <ellipse cx="400" cy="243" rx="92" ry="78" fill="#1e293b"/>
+  <path d="M314 238c17-38 48-58 86-58 38 0 69 20 86 58" stroke="#f97316" stroke-width="16" stroke-linecap="round" fill="none"/>
+  <path d="M330 298h140" stroke="#38bdf8" stroke-width="16" stroke-linecap="round"/>
+  <path d="M340 188v-40m120 40v-40" stroke="#1e293b" stroke-width="12" stroke-linecap="round"/>
+</svg>

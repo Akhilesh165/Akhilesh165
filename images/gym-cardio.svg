@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Cardio workout illustration">
+  <rect width="800" height="500" rx="36" fill="#08111f"/>
+  <circle cx="640" cy="140" r="120" fill="#38bdf8" fill-opacity="0.15"/>
+  <circle cx="180" cy="360" r="130" fill="#f97316" fill-opacity="0.16"/>
+  <rect x="182" y="175" width="436" height="182" rx="40" fill="#f8fafc" fill-opacity="0.95"/>
+  <path d="M250 270h80l48-72 44 116 48-72h82" stroke="#0f172a" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <circle cx="250" cy="270" r="16" fill="#f97316"/>
+  <circle cx="330" cy="198" r="16" fill="#38bdf8"/>
+  <circle cx="374" cy="314" r="16" fill="#f97316"/>
+  <circle cx="422" cy="242" r="16" fill="#38bdf8"/>
+  <circle cx="504" cy="270" r="16" fill="#f97316"/>
+</svg>
