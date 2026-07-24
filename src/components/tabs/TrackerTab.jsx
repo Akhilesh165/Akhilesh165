@@ -9,10 +9,24 @@ export function TrackerTab({ logs, setLogs, plan, setPlan }) {
   const today = new Date().toDateString();
 
   useEffect(() => {
-    if (restRunning && restTimer > 0) { restRef.current = setInterval(() => setRestTimer(t => t - 1), 1000); }
-    else { clearInterval(restRef.current); if (restTimer === 0) setRestRunning(false); }
+    if (!restRunning) {
+      clearInterval(restRef.current);
+      return;
+    }
+
+    restRef.current = setInterval(() => {
+      setRestTimer(prev => {
+        if (prev <= 1) {
+          clearInterval(restRef.current);
+          setRestRunning(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
     return () => clearInterval(restRef.current);
-  }, [restRunning, restTimer]);
+  }, [restRunning]);
 
   const addLog = () => {
     if (!form.exercise) return;

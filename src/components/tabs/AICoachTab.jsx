@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
-export function AICoachTab({ user, plan, setPlan }) {
+export function AICoachTab({ user, setPlan }) {
   const [apiKey, setApiKey] = useState(localStorage.getItem("gemini_api_key") || "");
   const [keyConfirmed, setKeyConfirmed] = useState(!!localStorage.getItem("gemini_api_key"));
   const [loading, setLoading] = useState(false);

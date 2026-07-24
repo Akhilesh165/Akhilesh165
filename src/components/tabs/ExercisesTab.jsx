@@ -1,19 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { EXERCISES } from "../../data/constants";
 import { LevelBadge } from "../common/LevelBadge";
 
-export function ExercisesTab({ onLog, plan, setPlan }) {
+export function ExercisesTab({ onLog, setPlan }) {
   const [mode, setMode] = useState("gym");
-  const [cat, setCat] = useState(null);
+  const [cat, setCat] = useState(Object.keys(EXERCISES.gym.categories)[0]);
   const [search, setSearch] = useState("");
   const [diff, setDiff] = useState("All");
   const [toast, setToast] = useState("");
 
   const modeData = EXERCISES[mode];
   const cats = Object.keys(modeData.categories);
-
-  useEffect(() => { setCat(cats[0]); }, [mode]);
 
   const exercises = cat ? modeData.categories[cat] || [] : [];
   const filtered = exercises.filter(e =>
@@ -162,7 +160,7 @@ export function ExercisesTab({ onLog, plan, setPlan }) {
 
       <div className="filter-bar">
         {Object.entries(EXERCISES).map(([key, val]) => (
-          <button key={key} onClick={() => setMode(key)} className={`mode-chip ${mode === key ? "active" : ""}`} style={{ borderColor: mode === key ? val.color : "rgba(148,163,184,0.2)", background: mode === key ? val.color : "rgba(15,23,42,0.75)" }}>
+          <button key={key} onClick={() => { setMode(key); setCat(Object.keys(EXERCISES[key].categories)[0]); }} className={`mode-chip ${mode === key ? "active" : ""}`} style={{ borderColor: mode === key ? val.color : "rgba(148,163,184,0.2)", background: mode === key ? val.color : "rgba(15,23,42,0.75)" }}>
             {val.icon} {val.label}
           </button>
         ))}

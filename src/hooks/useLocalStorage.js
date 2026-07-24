@@ -5,7 +5,8 @@ export function useLocalStorage(key, init) {
     try { 
       const s = localStorage.getItem(key); 
       return s ? JSON.parse(s) : init; 
-    } catch { 
+    } catch (error) { 
+      console.warn(`useLocalStorage read failed for ${key}:`, error);
       return init; 
     }
   });
@@ -15,7 +16,9 @@ export function useLocalStorage(key, init) {
     setVal(next); 
     try { 
       localStorage.setItem(key, JSON.stringify(next)); 
-    } catch {} 
+    } catch (error) { 
+      console.warn(`useLocalStorage write failed for ${key}:`, error);
+    } 
   };
 
   return [val, set];

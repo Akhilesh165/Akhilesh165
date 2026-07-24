@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { LoginScreen } from "./components/auth/LoginScreen";
@@ -18,18 +18,19 @@ export default function App() {
   const [foodLog, setFoodLog] = useLocalStorage("vf_food", []);
   const [plan, setPlan] = useLocalStorage("vf_plan", []);
   const [tab, setTab] = useState("home");
-  const [streak, setStreak] = useState(0);
 
-  useEffect(() => {
+  const streak = useMemo(() => {
     const dates = [...new Set(logs.map(l => l.date))].sort((a, b) => new Date(b) - new Date(a));
     let s = 0;
     let d = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
     for (let i = 0; i < dates.length; i++) {
       if (dates[i] === d.toDateString()) { s++; d.setDate(d.getDate() - 1); }
-      else if (i === 0 && dates[0] === new Date(Date.now() - 86400000).toDateString()) { s++; d.setDate(d.getDate() - 2); }
+      else if (i === 0 && dates[0] === yesterday.toDateString()) { s++; d.setDate(d.getDate() - 2); }
       else break;
     }
-    setStreak(s);
+    return s;
   }, [logs]);
 
   if (!user) return <LoginScreen onLogin={setUser} />;
@@ -47,12 +48,12 @@ export default function App() {
           style={{ flex: 1, overflowY: "auto" }}
         >
           {tab === "home" && <HomeTab user={user} logs={logs} foodLog={foodLog} streak={streak} />}
-          {tab === "exercises" && <ExercisesTab onLog={l => setLogs(ls => [l, ...ls])} plan={plan} setPlan={setPlan} />}
+          {tab === "exercises" && <ExercisesTab onLog={l => setLogs(ls => [l, ...ls])} setPlan={setPlan} />}
           {tab === "yoga" && <YogaTab onLog={l => setLogs(ls => [l, ...ls])} />}
           {tab === "tracker" && <TrackerTab logs={logs} setLogs={setLogs} plan={plan} setPlan={setPlan} />}
           {tab === "calories" && <CaloriesTab foodLog={foodLog} setFoodLog={setFoodLog} />}
-          {tab === "progress" && <ProgressTab user={user} logs={logs} foodLog={foodLog} />}
-          {tab === "ai" && <AICoachTab user={user} plan={plan} setPlan={setPlan} />}
+          {tab === "progress" && <ProgressTab user={user} logs={logs} />}
+          {tab === "ai" && <AICoachTab user={user} setPlan={setPlan} />}
         </motion.div>
       </AnimatePresence>
     </div>

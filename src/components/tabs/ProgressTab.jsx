@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { StatCard } from "../common/StatCard";
 
-export function ProgressTab({ user, logs, foodLog }) {
+export function ProgressTab({ user, logs }) {
   const [weightLogs, setWeightLogs] = useLocalStorage("vf_weight", [{ date: new Date().toDateString(), weight: user.weight || 70 }]);
   const [newWeight, setNewWeight] = useState("");
 

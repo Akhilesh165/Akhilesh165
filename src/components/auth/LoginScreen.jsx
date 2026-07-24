@@ -1,14 +1,36 @@
 import { useState } from "react";
 
+import axios from "axios";
+
 export function LoginScreen({ onLogin }) {
   const [mode, setMode] = useState("login");
   const [form, setForm] = useState({ name: "", email: "", password: "", age: "", weight: "", goal: "Lose weight" });
   const [err, setErr] = useState("");
 
-  const handle = () => {
+  const handle = async () => {
     if (!form.email || !form.password) { setErr("Fill in email and password."); return; }
     if (mode === "signup" && !form.name) { setErr("Enter your name."); return; }
-    onLogin({ name: form.name || form.email.split("@")[0], email: form.email, age: form.age, weight: form.weight, goal: form.goal });
+    
+    try {
+      if (mode === "signup") {
+        const res = await axios.post("/api/auth/register", {
+          username: form.email,
+          password: form.password
+        });
+        localStorage.setItem("token", res.data.token);
+        onLogin({ ...res.data.user, email: form.email, age: form.age, weight: form.weight, goal: form.goal, name: form.name });
+      } else {
+        const res = await axios.post("/api/auth/login", {
+          // The current form uses email field for username to keep it simple
+          username: form.email,
+          password: form.password
+        });
+        localStorage.setItem("token", res.data.token);
+        onLogin({ ...res.data.user, email: form.email, age: form.age, weight: form.weight, goal: form.goal, name: form.name });
+      }
+    } catch (error) {
+      setErr(error.response?.data?.message || "An error occurred during authentication.");
+    }
   };
 
   const inp = {

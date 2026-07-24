@@ -58,10 +58,26 @@ export function YogaTab({ onLog }) {
   };
 
   useEffect(() => {
-    if (running && timer > 0) { ref.current = setInterval(() => setTimer(t => t - 1), 1000); }
-    else { clearInterval(ref.current); if (timer === 0 && running) { setRunning(false); setToast("Pose complete! 🧘"); setTimeout(() => setToast(""), 2000); } }
+    if (!running) {
+      clearInterval(ref.current);
+      return;
+    }
+
+    ref.current = setInterval(() => {
+      setTimer(prev => {
+        if (prev <= 1) {
+          clearInterval(ref.current);
+          setRunning(false);
+          setToast("Pose complete! 🧘");
+          setTimeout(() => setToast(""), 2000);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
     return () => clearInterval(ref.current);
-  }, [running, timer]);
+  }, [running]);
 
   const startPose = (pose) => {
     setActive(pose);

@@ -53,7 +53,7 @@ export function CaloriesTab({ foodLog, setFoodLog }) {
             <text x={70} y={98} textAnchor="middle" fontSize={10} fill={totalCal > GOAL ? "#e53e3e" : "#1D9E75"}>{totalCal > GOAL ? "Over goal" : `${GOAL - totalCal} left`}</text>
           </svg>
           <div style={{ marginTop: 16 }}>
-            {[["Carbs", totalC, "g", "#378ADD", "#EEF4FF"], ["Protein", totalP, "g", "#D85A30", "#FAECE7"], ["Fat", totalF, "g", "#BA7517", "#FAEEDA"]].map(([label, val, u, col, bg]) => (
+            {[["Carbs", totalC, "g", "#378ADD"], ["Protein", totalP, "g", "#D85A30"], ["Fat", totalF, "g", "#BA7517"]].map(([label, val, u, col]) => (
               <div key={label} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
                 <div style={{ width: 10, height: 10, borderRadius: 3, background: col, flexShrink: 0 }} />
                 <div style={{ fontSize: 12, color: "#64748b", flex: 1 }}>{label}</div>
