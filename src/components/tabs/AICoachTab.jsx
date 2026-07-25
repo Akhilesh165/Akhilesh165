@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { buildFallbackCoachReply, buildFallbackWorkoutPlan } from "./aiCoachUtils";
 
 const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
@@ -91,7 +92,7 @@ Please respond ONLY with valid JSON in this exact format (no markdown, no code f
       });
 
       if (!res.ok) {
-        const errData = await res.json();
+        const errData = await res.json().catch(() => ({}));
         throw new Error(errData.error?.message || "API request failed");
       }
 
@@ -106,7 +107,10 @@ Please respond ONLY with valid JSON in this exact format (no markdown, no code f
       setGeneratedPlan(parsed);
       setChatMessages([{ role: "ai", text: `I've created your "${parsed.planName}" plan! Ask me anything about it — I can modify exercises, adjust intensity, explain movements, or answer any fitness question.` }]);
     } catch (err) {
-      setError(err.message || "Failed to generate plan. Check your API key.");
+      const fallbackPlan = buildFallbackWorkoutPlan({ ...formData, user });
+      setGeneratedPlan(fallbackPlan);
+      setChatMessages([{ role: "ai", text: `The Gemini service is temporarily unavailable, so I prepared a ready-to-use fallback plan: "${fallbackPlan.planName}". You can still adjust it from here.` }]);
+      setError(err.message ? `Using a local fallback plan because the AI service returned: ${err.message}` : "Using a local fallback plan because the AI service is currently unavailable.");
     } finally {
       setLoading(false);
     }
@@ -146,7 +150,8 @@ Please respond ONLY with valid JSON in this exact format (no markdown, no code f
       const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process that. Try again!";
       setChatMessages(prev => [...prev, { role: "ai", text: reply }]);
     } catch {
-      setChatMessages(prev => [...prev, { role: "ai", text: "Connection error. Please try again." }]);
+      const fallbackReply = buildFallbackCoachReply(userMsg, generatedPlan);
+      setChatMessages(prev => [...prev, { role: "ai", text: fallbackReply }]);
     } finally {
       setChatLoading(false);
     }

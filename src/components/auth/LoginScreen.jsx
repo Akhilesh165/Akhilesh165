@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import axios from "axios";
+import api from "../../api";
 
 export function LoginScreen({ onLogin }) {
   const [mode, setMode] = useState("login");
@@ -13,14 +13,14 @@ export function LoginScreen({ onLogin }) {
     
     try {
       if (mode === "signup") {
-        const res = await axios.post("/api/auth/register", {
+        const res = await api.post("/auth/register", {
           username: form.email,
           password: form.password
         });
         localStorage.setItem("token", res.data.token);
         onLogin({ ...res.data.user, email: form.email, age: form.age, weight: form.weight, goal: form.goal, name: form.name });
       } else {
-        const res = await axios.post("/api/auth/login", {
+        const res = await api.post("/auth/login", {
           // The current form uses email field for username to keep it simple
           username: form.email,
           password: form.password
