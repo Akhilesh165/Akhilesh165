@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildFallbackWorkoutPlan } from './aiCoachUtils.js';
+import { buildFallbackWorkoutPlan, buildVoiceAssistantReply } from './aiCoachUtils.js';
 
 test('buildFallbackWorkoutPlan returns a structured plan', () => {
   const plan = buildFallbackWorkoutPlan({
@@ -19,4 +19,11 @@ test('buildFallbackWorkoutPlan returns a structured plan', () => {
   assert.ok(plan.summary.includes('Upper body'));
   assert.ok(plan.tips.length >= 3);
   assert.equal(plan.weeklySchedule[0].exercises.length, 3);
+});
+
+test('buildVoiceAssistantReply returns a concise spoken response', () => {
+  const reply = buildVoiceAssistantReply('make this plan harder', { planName: 'Strength Builder' });
+
+  assert.match(reply, /harder/i);
+  assert.match(reply, /Strength Builder/i);
 });

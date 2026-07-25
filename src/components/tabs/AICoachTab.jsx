@@ -1,18 +1,22 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { buildFallbackCoachReply, buildFallbackWorkoutPlan } from "./aiCoachUtils";
+import { buildFallbackCoachReply, buildFallbackWorkoutPlan, buildVoiceAssistantReply } from "./aiCoachUtils";
 
 const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
 export function AICoachTab({ user, setPlan }) {
-  const [apiKey, setApiKey] = useState(localStorage.getItem("gemini_api_key") || "");
-  const [keyConfirmed, setKeyConfirmed] = useState(!!localStorage.getItem("gemini_api_key"));
+  const envApiKey = import.meta?.env?.VITE_GEMINI_API_KEY || "";
+  const [apiKey, setApiKey] = useState(localStorage.getItem("gemini_api_key") || envApiKey);
+  const [keyConfirmed, setKeyConfirmed] = useState(!!(localStorage.getItem("gemini_api_key") || envApiKey));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [generatedPlan, setGeneratedPlan] = useState(null);
   const [chatMessages, setChatMessages] = useState([]);
   const [chatInput, setChatInput] = useState("");
   const [chatLoading, setChatLoading] = useState(false);
+  const [voiceListening, setVoiceListening] = useState(false);
+  const [voiceStatus, setVoiceStatus] = useState("Tap the mic and ask about your plan, nutrition, or recovery.");
+  const recognitionRef = useRef(null);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -116,10 +120,20 @@ Please respond ONLY with valid JSON in this exact format (no markdown, no code f
     }
   };
 
-  const sendChat = async () => {
-    if (!chatInput.trim() || chatLoading) return;
+  const speakText = (text) => {
+    if (typeof window === "undefined" || !window.speechSynthesis) return;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    utterance.rate = 1;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  };
 
-    const userMsg = chatInput.trim();
+  const sendChat = async (overrideMessage = "", fromVoice = false) => {
+    const message = (overrideMessage || chatInput).trim();
+    if (!message || chatLoading) return;
+
+    const userMsg = message;
     setChatInput("");
     setChatMessages(prev => [...prev, { role: "user", text: userMsg }]);
     setChatLoading(true);
@@ -149,12 +163,64 @@ Please respond ONLY with valid JSON in this exact format (no markdown, no code f
       const data = await res.json();
       const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process that. Try again!";
       setChatMessages(prev => [...prev, { role: "ai", text: reply }]);
+      if (fromVoice) speakText(reply);
     } catch {
       const fallbackReply = buildFallbackCoachReply(userMsg, generatedPlan);
-      setChatMessages(prev => [...prev, { role: "ai", text: fallbackReply }]);
+      const voiceReply = buildVoiceAssistantReply(userMsg, generatedPlan);
+      const reply = fromVoice ? voiceReply : fallbackReply;
+      setChatMessages(prev => [...prev, { role: "ai", text: reply }]);
+      if (fromVoice) speakText(reply);
     } finally {
       setChatLoading(false);
     }
+  };
+
+  const startVoiceInput = () => {
+    if (typeof window === "undefined") return;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      setVoiceStatus("Voice input is not available in this browser. Try Chrome or Edge.");
+      return;
+    }
+
+    if (!recognitionRef.current) {
+      const recognition = new SpeechRecognition();
+      recognition.lang = "en-US";
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.onstart = () => {
+        setVoiceListening(true);
+        setVoiceStatus("Listening… ask your fitness question.");
+      };
+      recognition.onerror = (event) => {
+        setVoiceListening(false);
+        setVoiceStatus(`Voice input error: ${event.error}`);
+      };
+      recognition.onend = () => {
+        setVoiceListening(false);
+      };
+      recognition.onresult = (event) => {
+        const transcript = Array.from(event.results)
+          .map(result => result[0].transcript)
+          .join(" ")
+          .trim();
+
+        if (transcript) {
+          setVoiceStatus(`Heard: "${transcript}"`);
+          sendChat(transcript, true);
+        }
+      };
+      recognitionRef.current = recognition;
+    }
+
+    if (voiceListening) {
+      recognitionRef.current.stop();
+      return;
+    }
+
+    setVoiceListening(true);
+    recognitionRef.current.start();
   };
 
   const addPlanToTracker = () => {
@@ -382,6 +448,31 @@ Please respond ONLY with valid JSON in this exact format (no markdown, no code f
                       <p style={{ color: "#EF4444", fontSize: 13, margin: 0 }}>⚠ {error}</p>
                     </div>
                   )}
+
+                  <div style={{ ...card, padding: "14px 16px", marginTop: 12 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+                      <div>
+                        <div style={{ ...label, fontSize: 10, color: "rgba(255,255,255,0.45)" }}>Voice Coach</div>
+                        <div style={{ color: "rgba(255,255,255,0.7)", fontSize: 12, lineHeight: 1.5 }}>{voiceStatus}</div>
+                      </div>
+                      <button
+                        onClick={startVoiceInput}
+                        style={{
+                          padding: "10px 14px",
+                          borderRadius: 999,
+                          border: voiceListening ? "1px solid #ff6a00" : "1px solid rgba(255,106,0,0.24)",
+                          background: voiceListening ? "rgba(255,106,0,0.16)" : "transparent",
+                          color: "#ff6a00",
+                          fontSize: 13,
+                          cursor: "pointer",
+                          fontFamily: "inherit",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {voiceListening ? "⏹ Stop" : "🎤 Voice Ask"}
+                      </button>
+                    </div>
+                  </div>
 
                   <button onClick={generatePlan} disabled={loading} style={{ ...btnPrimary, width: "100%", opacity: loading ? 0.7 : 1 }}>
                     {loading ? (

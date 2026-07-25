@@ -61,4 +61,27 @@ function buildFallbackCoachReply(userMessage, generatedPlan) {
   return 'I can help you refine your plan by adjusting volume, tempo, or exercise selection based on your goals.';
 }
 
-export { buildFallbackWorkoutPlan, buildFallbackCoachReply };
+function buildVoiceAssistantReply(userMessage, generatedPlan) {
+  const normalized = (userMessage || '').toLowerCase();
+  if (normalized.includes('harder')) {
+    return `I can make ${generatedPlan?.planName || 'your plan'} harder by increasing the load, adding pauses, or trimming the rest time between sets.`;
+  }
+  if (normalized.includes('easier') || normalized.includes('lighter')) {
+    return `I can make ${generatedPlan?.planName || 'your plan'} easier by lowering the load, reducing the volume, or simplifying the tempo.`;
+  }
+  if (normalized.includes('pain') || normalized.includes('knee') || normalized.includes('back')) {
+    return 'If you feel pain, I recommend switching to a pain-free variation and keeping the movement smooth and controlled.';
+  }
+  if (normalized.includes('diet') || normalized.includes('nutrition')) {
+    return 'For nutrition, focus on protein, hydration, and consistent meals around your training sessions for better recovery.';
+  }
+  if (normalized.includes('help') || normalized.includes('coach')) {
+    return 'I can help with workouts, recovery, form cues, and progress changes so your fitness plan stays practical and sustainable.';
+  }
+  if (generatedPlan?.planName) {
+    return `For ${generatedPlan.planName}, I’d keep the reps controlled, recover well, and progress gradually once your form feels solid.`;
+  }
+  return 'I can help you build a fitter routine by adjusting workouts, recovery, and consistency around your goals.';
+}
+
+export { buildFallbackWorkoutPlan, buildFallbackCoachReply, buildVoiceAssistantReply };
